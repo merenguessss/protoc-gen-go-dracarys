@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	gengo "google.golang.org/protobuf/cmd/protoc-gen-go/internal_gengo"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/types/pluginpb"
 )
@@ -13,7 +15,7 @@ func main() {
 	showVersion := flag.Bool("version", false, "print the version and exit")
 	flag.Parse()
 	if *showVersion {
-		fmt.Printf("protoc-gen-go-grpc %v\n", version)
+		fmt.Printf("protoc-gen-go-dracarys %v\n", version)
 		return
 	}
 
@@ -23,7 +25,8 @@ func main() {
 			if !f.Generate {
 				continue
 			}
-			generateFile(gen, f)
+			g := gengo.GenerateFile(gen, f)
+			generateFile(gen, f, g)
 		}
 		return nil
 	})
